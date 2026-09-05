@@ -9,10 +9,13 @@
 
 name: terraform-ci
 
+# Runs on every branch push, not just main: a feature branch is exactly where a
+# formatting mistake should surface, before a pull request exists. Pull requests
+# stay in the trigger list so that PRs opened from forks -- whose pushes do not
+# run workflows in this repository -- are still checked.
 on:
-  pull_request:
   push:
-    branches: [main]
+  pull_request:
 
 permissions:
   contents: read
