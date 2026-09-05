@@ -4,6 +4,11 @@
 variable "name" {
   description = "Name of the resource group to create."
   type        = string
+
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9._()-]{1,90}$", var.name)) && !endswith(var.name, ".")
+    error_message = "name must be 1-90 characters of letters, digits, '.', '_', '(', ')' or '-', and must not end with a period."
+  }
 }
 
 variable "location" {
