@@ -1,9 +1,11 @@
-# Fast feedback on pull requests. The real plan runs in HCP Terraform, which is
-# wired to this repository as a VCS-driven workspace -- this workflow only
-# catches formatting and syntax problems before HCP is involved.
+# Formatting is the one check HCP Terraform does not already perform.
 #
-# Requires a repository secret named TF_API_TOKEN holding an HCP Terraform API
-# token. `terraform init` needs it because the root module uses a cloud block.
+# The workspace is VCS-driven: HCP runs a speculative plan on every pull request
+# and a plan on every push to the default branch, and a plan necessarily parses
+# and validates the configuration. Running init/validate here too would only
+# duplicate that -- and would require an HCP token as a repository secret. So
+# this workflow deliberately stops at `terraform fmt`, which needs no
+# credentials at all.
 
 name: terraform-ci
 
@@ -16,8 +18,8 @@ permissions:
   contents: read
 
 jobs:
-  validate:
-    name: fmt and validate
+  fmt:
+    name: fmt
     runs-on: ubuntu-latest
 
     steps:
@@ -28,13 +30,6 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.16.1
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       - name: Check formatting
         run: terraform fmt -check -recursive -diff
-
-      - name: Initialize
-        run: terraform init -input=false
-
-      - name: Validate
-        run: terraform validate -no-color
