@@ -19,6 +19,18 @@ Build practical Terraform knowledge with Ansible-oriented explanations so a netw
 - **Facts and registered outputs (Ansible)** → **Data sources + outputs**
 - **Ansible Tower/AWX pipelines** → **HCP Terraform workspaces, runs, and policy checks**
 
+## Repository layout
+
+```
+environments/dev/    the dev root module (HCP working directory)
+modules/             reusable building blocks -- Terraform's answer to roles
+docs/structure.md    why the tree is split this way, and how to add to it
+```
+
+Modules are to Terraform what roles are to Ansible, and each environment gets
+its own directory plus its own HCP workspace so their state stays separate.
+See [docs/structure.md](docs/structure.md) for the full explanation.
+
 ## Typical workflow (compared to Ansible)
 
 1. Define infrastructure as code in Terraform (`.tf`) files (similar to writing a playbook/role).
