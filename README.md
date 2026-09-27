@@ -10,31 +10,26 @@ Terraform Azure personal proof-of-concept project to learn infrastructure automa
 
 Build practical Terraform knowledge with Ansible-oriented explanations so a network engineer can quickly map familiar concepts to Terraform patterns.
 
-## Terraform vs Ansible (quick mapping)
-
-- **Inventory / hosts (Ansible)** → **Providers + resources (Terraform)**
-- **Playbooks + roles (Ansible)** → **Modules + root module composition (Terraform)**
-- **Idempotent task runs (Ansible)** → **Declarative desired state + `terraform plan`/`apply`**
-- **Variables in group_vars/host_vars (Ansible)** → **Input variables (`variables.tf`, `*.tfvars`)**
-- **Facts and registered outputs (Ansible)** → **Data sources + outputs**
-- **Ansible Tower/AWX pipelines** → **HCP Terraform workspaces, runs, and policy checks**
-
 ## Repository layout
 
 ```
-environments/dev/    the dev root module (HCP working directory)
-modules/             reusable building blocks -- Terraform's answer to roles
-docs/structure.md    why the tree is split this way, and how to add to it
+main.tf       Azure resources
+variables.tf  configuration inputs
+providers.tf  Azure provider setup
+versions.tf   Terraform, provider, and HCP Terraform settings
+outputs.tf    values returned after apply
 ```
 
-Modules are to Terraform what roles are to Ansible, and each environment gets
-its own directory plus its own HCP workspace so their state stays separate.
-See [docs/structure.md](docs/structure.md) for the full explanation.
+This starts with one root module at the repository root. Resources are declared
+directly here; reusable child modules can be introduced later when they are
+useful.
 
-## Typical workflow (compared to Ansible)
+## Getting started
 
-1. Define infrastructure as code in Terraform (`.tf`) files (similar to writing a playbook/role).
-2. Run `terraform init` (similar to preparing modules/collections and environment dependencies).
-3. Run `terraform plan` to preview changes (similar to checking what Ansible tasks would change).
-4. Run `terraform apply` to enforce desired state (similar to running an idempotent playbook).
-5. Integrate change/approval flow with ServiceNow and execute through HCP Terraform pipelines.
+Set the HCP Terraform workspace working directory to the repository root. Add
+`admin_source_cidr` as a Terraform workspace variable with your public IP in
+CIDR form (for example, `203.0.113.10/32`). Set Azure credentials on the
+workspace as sensitive environment variables.
+
+HCP Terraform will run a plan when changes are pushed. Review the plan before
+approving an apply.
