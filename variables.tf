@@ -1,9 +1,5 @@
-# Ansible mapping: this is group_vars/all with type checking. Values are set
-# on the HCP workspace (Terraform variables) rather than in a committed
-# .tfvars file.
-
 variable "project" {
-  description = "Short project identifier used to build resource names."
+  description = "Short project identifier used in resource names and tags."
   type        = string
   default     = "tfpoc"
 
@@ -14,7 +10,7 @@ variable "project" {
 }
 
 variable "environment" {
-  description = "Deployment environment, used in resource names and tags."
+  description = "Environment name used in resource names and tags."
   type        = string
   default     = "dev"
 
@@ -25,13 +21,23 @@ variable "environment" {
 }
 
 variable "location" {
-  description = "Azure region for all resources in this root module."
+  description = "Azure region for the resources."
   type        = string
   default     = "eastus"
 }
 
 variable "tags" {
-  description = "Extra tags merged into the common tag set on every resource."
+  description = "Additional tags to apply to supported resources."
   type        = map(string)
   default     = {}
+}
+
+variable "admin_source_cidr" {
+  description = "Public IP CIDR allowed to connect to SSH on port 22."
+  type        = string
+
+  validation {
+    condition     = can(cidrhost(var.admin_source_cidr, 0))
+    error_message = "admin_source_cidr must be a valid IP CIDR."
+  }
 }
