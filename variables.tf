@@ -1,7 +1,7 @@
 variable "project" {
   description = "Short project identifier used in resource names and tags."
   type        = string
-  default     = "tfpoc"
+  default     = "vics"
 
   validation {
     condition     = can(regex("^[a-z0-9]{2,12}$", var.project))

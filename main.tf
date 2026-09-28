@@ -11,7 +11,7 @@ locals {
 }
 
 resource "azurerm_resource_group" "vics_resource_group" {
-  name     = "rg-${var.project}-${var.environment}"
+  name     = "${var.project}-rg-${var.environment}"
   location = var.location
   tags     = local.common_tags
 }
