@@ -127,7 +127,7 @@ resource "azurerm_linux_virtual_machine" "app_server" {
   computer_name                   = "appserver"
   resource_group_name             = azurerm_resource_group.vics_resource_group.name
   location                        = azurerm_resource_group.vics_resource_group.location
-  size                            = "Standard_D2s_v3"
+  size                            = "Standard_F1ads_v7"
   admin_username                  = "azureuser"
   disable_password_authentication = true
   network_interface_ids           = [azurerm_network_interface.app_server.id]
@@ -156,7 +156,7 @@ resource "azurerm_linux_virtual_machine" "database" {
   computer_name                   = "database"
   resource_group_name             = azurerm_resource_group.vics_resource_group.name
   location                        = azurerm_resource_group.vics_resource_group.location
-  size                            = "Standard_D2s_v3"
+  size                            = "Standard_F1ads_v7"
   admin_username                  = "azureuser"
   disable_password_authentication = true
   network_interface_ids           = [azurerm_network_interface.database.id]
