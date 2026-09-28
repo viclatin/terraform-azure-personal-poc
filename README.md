@@ -28,8 +28,8 @@ useful.
 
 Set the HCP Terraform workspace working directory to the repository root. Add
 `admin_source_cidr` as a Terraform workspace variable with your public IP in
-CIDR form (for example, `203.0.113.10/32`). Set Azure credentials on the
-workspace as sensitive environment variables.
+CIDR form, and `admin_ssh_public_key` with your SSH public key. Set Azure
+credentials on the workspace as sensitive environment variables.
 
 HCP Terraform will run a plan when changes are pushed. Review the plan before
 approving an apply.

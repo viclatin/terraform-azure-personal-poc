@@ -15,3 +15,18 @@ output "subnet_ids" {
     private = azurerm_subnet.private.id
   }
 }
+
+output "app_server_public_ip" {
+  description = "Public IP address for SSH access to the app server."
+  value       = azurerm_public_ip.app_server.ip_address
+}
+
+output "app_server_private_ip" {
+  description = "Private IP address of the app server."
+  value       = azurerm_network_interface.app_server.private_ip_address
+}
+
+output "database_private_ip" {
+  description = "Private IP address of the database VM."
+  value       = azurerm_network_interface.database.private_ip_address
+}

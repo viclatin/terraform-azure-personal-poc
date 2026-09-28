@@ -41,3 +41,8 @@ variable "admin_source_cidr" {
     error_message = "admin_source_cidr must be a valid IP CIDR."
   }
 }
+
+variable "admin_ssh_public_key" {
+  description = "SSH public key installed for the azureuser account on both VMs."
+  type        = string
+}
