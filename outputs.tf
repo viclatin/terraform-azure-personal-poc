@@ -1,11 +1,11 @@
 output "resource_group_name" {
   description = "Name of the Azure resource group."
-  value       = azurerm_resource_group.main.name
+  value       = azurerm_resource_group.vics_resource_group.name
 }
 
 output "virtual_network_id" {
   description = "ID of the virtual network."
-  value       = azurerm_virtual_network.main.id
+  value       = azurerm_virtual_network.vics_virtual_network.id
 }
 
 output "subnet_ids" {
