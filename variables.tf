@@ -1,7 +1,7 @@
 variable "project" {
   description = "Short project identifier used in resource names and tags."
   type        = string
-  default     = "tfpoc"
+  default     = "vics"
 
   validation {
     condition     = can(regex("^[a-z0-9]{2,12}$", var.project))
@@ -40,4 +40,9 @@ variable "admin_source_cidr" {
     condition     = can(cidrhost(var.admin_source_cidr, 0))
     error_message = "admin_source_cidr must be a valid IP CIDR."
   }
+}
+
+variable "admin_ssh_public_key" {
+  description = "SSH public key installed for the azureuser account on both VMs."
+  type        = string
 }
